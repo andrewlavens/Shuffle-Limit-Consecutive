@@ -16,11 +16,11 @@ function rmc_check(Array $array, Int $cons) : bool
 }
 
 /*
-    random_max_cons: shuffle an array such that there aren't n consecutive values that are equal
+    shuffle_limit_consecutive: shuffle an array such that there aren't n consecutive values that are equal
     array: the array to shuffle
     max_cons: the maximum number of consecutive values permitted
 */
-function random_max_cons(Array $array, Int $max_cons): Array
+function shuffle_limit_consecutive(Array $array, Int $max_cons): Array
 {
     # Error must be triggered when (max_cons + 1) consecutive values are detected
     $error_cons = $max_cons + 1;
@@ -58,13 +58,13 @@ foreach(range(1, 2) as $cons) {
     $results = [];
     $start = microtime(true);
     foreach (range(1, $trials) as $i) {
-        $results[] = random_max_cons($arr, $cons);
+        $results[] = shuffle_limit_consecutive($arr, $cons);
         echo ".";
     }
     echo "\n";
     $end = microtime(true);
     print_r($results[3]);
-    echo ((string)($trials) . ' iterations of random_max_cons with maximum of ' . (string)($cons) . ' consecutive values: ' . (string) ($end-$start) . 's, average of ' . (string)((($end-$start)/$trials) * 1000) . "ms\n\n");
+    echo ((string)($trials) . ' iterations of shuffle_limit_consecutive with maximum of ' . (string)($cons) . ' consecutive values: ' . (string) ($end-$start) . 's, average of ' . (string)((($end-$start)/$trials) * 1000) . "ms\n\n");
 }
 
 $trials = 1000;
@@ -72,11 +72,11 @@ foreach(range(3, 10) as $cons) {
     $results = [];
     $start = microtime(true);
     foreach (range(1, $trials) as $i) {
-        $results[] = random_max_cons($arr, $cons);
+        $results[] = shuffle_limit_consecutive($arr, $cons);
         echo ".";
     }
     echo "\n";
     $end = microtime(true);
     //print_r($results[999]);
-    echo ((string)($trials) . ' iterations of random_max_cons with maximum of ' . (string)($cons) . ' consecutive values: ' . (string) ($end-$start) . 's, average of ' . (string)((($end-$start)/$trials) * 1000) . "ms\n\n");
+    echo ((string)($trials) . ' iterations of shuffle_limit_consecutive with maximum of ' . (string)($cons) . ' consecutive values: ' . (string) ($end-$start) . 's, average of ' . (string)((($end-$start)/$trials) * 1000) . "ms\n\n");
 }

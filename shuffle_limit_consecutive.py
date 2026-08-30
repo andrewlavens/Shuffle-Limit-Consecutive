@@ -27,11 +27,11 @@ def rmc_check(array:list, cons:int) -> bool:
     return True
 
 '''
-    random_max_cons: shuffle an array such that there aren't n consecutive values that are equal
+    shuffle_limit_consecutive: shuffle an array such that there aren't n consecutive values that are equal
     array: the array to shuffle
     max_cons: the maximum number of consecutive values permitted
 '''
-def random_max_cons(array: list, max_cons: int) -> list:
+def shuffle_limit_consecutive(array: list, max_cons: int) -> list:
     # Error must be triggered when (max_cons + 1) consecutive values are detected
     error_cons = max_cons + 1
     sufficiently_random = False

@@ -1,4 +1,4 @@
-export function random_max_cons(arr, max_cons)
+export function shuffle_limit_consecutive(arr, max_cons)
 {
     // Error must be triggered when (max_cons + 1) consecutive values are detected
     error_cons = max_cons + 1

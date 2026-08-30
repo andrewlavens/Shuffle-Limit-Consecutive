@@ -2,7 +2,7 @@
     <head>
         <script>
 
-            function random_max_cons(arr, max_cons)
+            function shuffle_limit_consecutive(arr, max_cons)
             {
                 // Error must be triggered when (max_cons + 1) consecutive values are detected
                 error_cons = max_cons + 1
@@ -39,15 +39,15 @@
             }
 
             arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
-            console.log(random_max_cons(arr,2).join(','))
-            console.log(random_max_cons(arr,3).join(','))
-            console.log(random_max_cons(arr,4).join(','))
+            console.log(shuffle_limit_consecutive(arr,2).join(','))
+            console.log(shuffle_limit_consecutive(arr,3).join(','))
+            console.log(shuffle_limit_consecutive(arr,4).join(','))
             trials = 1000
 
             for (i=2; i<9; i++) {
                 start = performance.now()
                 for (j=1; j<=trials; j++) {
-                    result = random_max_cons(arr,i)
+                    result = shuffle_limit_consecutive(arr,i)
                 }
                 end = performance.now()
                 console.log(result.join(','))
