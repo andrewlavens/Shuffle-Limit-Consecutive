@@ -44,7 +44,7 @@ Calling the function ```shuffle_limit_consecutive(my_array, 2)``` should result 
 [1, 2, 2, 1, 3, 4, 2, 3, 1, 4, 4, 3, 3, 2, 1, 1, 4, 4, 3, 2]
 ```
 
-Calling the function with an argument of ```1``` should return an array where no element is different from the one before:
+Calling the function with an argument of ```1``` should return an array where every element is different from the one before:
 
 ```txt
 [3, 4, 1, 3, 4, 2, 1, 3, 1, 3, 2, 1, 4, 2, 3, 1, 2, 4, 2, 4]
@@ -53,7 +53,7 @@ Calling the function with an argument of ```1``` should return an array where no
 ## Caveats
 
 - This isn't a 'solver'
-  - This function won't attempt to find a single solution. It will simply shuffle the array then check for consecutive identical elements. If you are looking for a 'solution' where shuffling an array in the 'right' way produces a 'correct' answer then this probable isn't for you.
+  - This function won't attempt to find a single solution. It will simply shuffle the array then check for consecutive identical elements. If you are looking for a 'solution' where shuffling an array in the 'right' way produces a 'correct' answer then this probably isn't for you.
 - This isn't fast!
   - Using Python the function is rapid when checking for 3+ consecutive elements in an array of ~100 elements. Larger arrays will take longer to check, especially larger arrays containing less variety (e.g. an array of 200 elements that are either '1' or '2')
   - Checking for a limit of 1 or 2 identical consecutive elements in arrays with 20+ elements will take time. Running the function with an array of 50 elements and a consecutive limit of 1 took an average of 145ms (running the function 100 times).
