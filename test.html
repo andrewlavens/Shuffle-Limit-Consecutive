@@ -4,12 +4,12 @@
 
             function shuffle_limit_consecutive(arr, max_cons)
             {
-                // Error must be triggered when (max_cons + 1) consecutive values are detected
+                // Error must be triggered when (max_cons + 1) consecutive identical values are detected
                 error_cons = max_cons + 1
                 sufficiently_random = false
                 while (sufficiently_random == false) {
                     shuffleArray(arr)
-                    sufficiently_random = rmc(arr, error_cons)
+                    sufficiently_random = slc(arr, error_cons)
                 }
                 return arr
             }
@@ -22,7 +22,7 @@
                 return array;
             }
 
-            function rmc(array, cons) {
+            function slc(array, cons) {
                 counter = 1
                 idx = cons
                 while (counter < cons) {
@@ -30,7 +30,7 @@
                         return true
                     }
                     if (array[idx-counter] != array[idx-counter-1]) {
-                        return rmc(array.slice(idx-counter), cons)
+                        return slc(array.slice(idx-counter), cons)
                     } else {
                         counter+=1
                     }
@@ -39,19 +39,32 @@
             }
 
             arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
-            console.log(shuffle_limit_consecutive(arr,2).join(','))
-            console.log(shuffle_limit_consecutive(arr,3).join(','))
-            console.log(shuffle_limit_consecutive(arr,4).join(','))
             trials = 1000
 
-            for (i=2; i<9; i++) {
+            for (i=2; i<6; i++) {
+                let results = []
                 start = performance.now()
                 for (j=1; j<=trials; j++) {
                     result = shuffle_limit_consecutive(arr,i)
+                    results.push(result)
                 }
                 end = performance.now()
-                console.log(result.join(','))
-                console.log(trials + ' iterations where no more than ' + i + ' consecutive values allowed: ' + (end - start))
+                console.log(trials + ' iterations where no more than ' + i + ' consecutive identical values allowed: ' + (end - start) + 'ms')
+                console.log('One sample result: ', results[4].join(','))
+            }
+
+            arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+            trials = 10
+            for (i=6; i<9; i++) {
+                let results = []
+                start = performance.now()
+                for (j=1; j<=trials; j++) {
+                    result = shuffle_limit_consecutive(arr,i)
+                    results.push(result)
+                }
+                end = performance.now()
+                console.log(trials + ' iterations where no more than ' + i + ' consecutive identical values allowed: ' + (end - start) + 'ms')
+                console.log('One sample result: ', results[4].join(','))
             }
 
         </script>

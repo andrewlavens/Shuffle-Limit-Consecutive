@@ -1,3 +1,20 @@
+/*
+Copyright (C) 2026 Andrew Lavens
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://gnu.org>.
+*/
+
 export function shuffle_limit_consecutive(arr, max_cons)
 {
     // Error must be triggered when (max_cons + 1) consecutive values are detected
@@ -5,7 +22,7 @@ export function shuffle_limit_consecutive(arr, max_cons)
     sufficiently_random = false
     while (sufficiently_random == false) {
         shuffleArray(arr)
-        sufficiently_random = rmc(arr, error_cons)
+        sufficiently_random = slc(arr, error_cons)
     }
     return arr
 }
@@ -18,7 +35,7 @@ function shuffleArray(array) {
     return array;
 }
 
-function rmc(array, cons) {
+function slc(array, cons) {
     counter = 1
     idx = cons
     while (counter < cons) {
@@ -26,7 +43,7 @@ function rmc(array, cons) {
             return true
         }
         if (array[idx-counter] != array[idx-counter-1]) {
-            return rmc(array.slice(idx-counter), cons)
+            return slc(array.slice(idx-counter), cons)
         } else {
             counter+=1
         }
