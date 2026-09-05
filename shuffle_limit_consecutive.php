@@ -16,32 +16,20 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://gnu.org>.
 */
 /*
-    slc: check a sequence for too many consecutive values
+    slc_check_sparse: check a sequence for too many consecutive values
     array: the array to test
     cons: the maximum number of consecutive values 
 */
-function slc_check(Array $array, Int $cons) : bool
+function slc_check_sparse(Array $array, Int $max_cons) : bool
 {
-    for ($idx = $cons-1; $idx < count($array) -1; $idx+=$cons) {
-        if ($array[$idx] == $array[$idx + 1]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function slc_check_sparse($array, $cons) : bool
-{
-    //$error_cons = $cons + 1;
-    $error_cons = $cons;
-    $counter = 1;
-    $idx = $error_cons;
-    while ($counter < $error_cons) {
-        if (count($array) < $error_cons) {
+    $counter = 0;
+    $idx = $max_cons;
+    while ($counter < $max_cons) {
+        if (count($array) <= $max_cons) {
             return true;
         }
         if ($array[$idx-$counter] != $array[$idx-$counter-1]) {
-            return slc_check_sparse(array_slice($array, ($idx-$counter)), $error_cons);
+            return slc_check_sparse(array_slice($array, ($idx-$counter)), $max_cons);
         } else {
             $counter+=1;
         }

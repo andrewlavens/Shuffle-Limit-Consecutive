@@ -17,12 +17,10 @@ along with this program.  If not, see <https://gnu.org>.
 
 export function shuffle_limit_consecutive(arr, max_cons)
 {
-    // Error must be triggered when (max_cons + 1) consecutive values are detected
-    error_cons = max_cons + 1
     sufficiently_random = false
     while (sufficiently_random == false) {
         shuffleArray(arr)
-        sufficiently_random = slc(arr, error_cons)
+        sufficiently_random = slc(arr, max_cons)
     }
     return arr
 }
@@ -36,10 +34,10 @@ function shuffleArray(array) {
 }
 
 function slc(array, cons) {
-    counter = 1
+    counter = 0
     idx = cons
     while (counter < cons) {
-        if (array.length < cons) {
+        if (array.length <= cons) {
             return true
         }
         if (array[idx-counter] != array[idx-counter-1]) {

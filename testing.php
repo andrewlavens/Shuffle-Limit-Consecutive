@@ -3,9 +3,9 @@
 require ("shuffle_limit_consecutive.php");
 
 // Timing many runs to retrieve an average
-$arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
+$arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
 $trials = 100;
-foreach(range(2, 2) as $cons) {
+foreach(range(1, 2) as $cons) {
     $results = [];
     $start = microtime(true);
     foreach (range(1, $trials) as $i) {

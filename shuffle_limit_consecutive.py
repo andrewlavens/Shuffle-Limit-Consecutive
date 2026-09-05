@@ -18,22 +18,20 @@ import random
 '''
     slc_check: check a sequence for too many consecutive values
     array: the array to test
-    cons: the number of consecutive identical values (CIVs) that would trigger an error
+    cons: the maximum number of consecutive values permitted
     This function attempts to run sparse checking of an array, looking for too many consecutive identical values (CIVs). It starts at the nth value (where n is the CIV limit) and compares it to the (nth -1) value. If the array elements are different, advance the array pointer another n values and reset the CIV limit counter. If they are the same, keep working backwards until either a different element is found or the CIV limit is reached.
     If the CIV limit is reached, the function immediately returns false. If the end of the array is reached, the function returns true.
 '''
 def slc_check(array: list, cons: int) -> bool:
-    global checked_idx, array_of_checked_idx
-    counter = 1
+    counter = 0
     idx = cons
     while counter < cons:
-        if len(array) < cons:
+        if len(array) <= cons:
             return True
         if array[idx-counter] != array[idx-counter-1]:
             return slc_check(array[(idx-counter):], cons)
         else:
             counter+=1
-    checked_idx = 0
     return False
 
 '''
@@ -42,10 +40,8 @@ def slc_check(array: list, cons: int) -> bool:
     max_cons: the maximum number of consecutive values permitted
 '''
 def shuffle_limit_consecutive(array: list, max_cons: int) -> list:
-    # Error must be triggered when (max_cons + 1) consecutive values are detected
-    error_cons = max_cons + 1
     sufficiently_random = False
     while sufficiently_random == False:
         random.shuffle(array)
-        sufficiently_random = slc_check(array, error_cons)
+        sufficiently_random = slc_check(array, max_cons)
     return array
