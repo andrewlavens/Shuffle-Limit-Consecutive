@@ -1,8 +1,10 @@
-# Shuffle-Limit-Consecutive
+# Shuffling arrays with limits on consecutive identical values
 
 Shuffling an array, checking it has no more than n consecutive identical values (CIVs)
 
-## Origins
+## Shuffle-Limit-Consecutive
+
+### Origins
 
 This grew out of a regular requirement to take a collection of files and randomise them, limiting the number of a particular type that were presented consecutively. The files and types were stored in a table, for example:
 
@@ -20,14 +22,14 @@ The order of the files didn't matter - only the limit on the order of types. So 
 
 These functions take an array, shuffle it, then check that there are no more than *n* CIVs.
 
-## Operation
+### Operation
 
-### ```result = shuffle_limit_consecutive(my_array, n)```
+#### ```result = shuffle_limit_consecutive(my_array, n)```
 
 - ```my_array``` (array) - the array to be shuffled
 - ```n``` - (integer) the maximum number of CIVs permitted
 
-### Returns
+#### Returns
 
 - ```result``` (array) the shuffled and verified array
 
@@ -50,10 +52,43 @@ Calling the function with an argument of ```1``` should return an array where ev
 [3, 4, 1, 3, 4, 2, 1, 3, 1, 3, 2, 1, 4, 2, 3, 1, 2, 4, 2, 4]
 ```
 
+## Shuffle-Limit-Consecutive-Substring
+
+Shuffling an array, checking it has no more than n consecutive identical values (CIVs) but using substrings for comparisons
+
+In this case the file types were derived from the names of the files, e.g.
+
+- HjPTYr7x_a.wav
+- nKGtrIpo_a.wav
+- khtkKVfE_a.wav
+- bik8vP4H_b.wav
+- ii5zUs1r_b.wav
+- 7SOc8tz3_b.wav
+- ILo6BFPT_b.wav
+
+Again, the order of the files didn't matter - only the limit on the order of types. In this example the type is inferred from the character before the ```.wav```, either ```a``` or ```b```.
+
+This function takes an array, shuffles it, then checks that there are no more than *n* CIVs.
+
+### Usage
+
+#### ```result = shuffle_limit_consecutive_substring(my_array, n, offset, length)```
+
+- ```my_array``` (array) - the array to be shuffled
+- ```n``` - (integer) the maximum number of CIVs permitted
+- ```offset``` The starting index of the string, negative numbers work backwards from the end
+- ```length``` the length of the substring to use
+
+### Return values
+
+- ```result``` (array) the shuffled and verified array
+
 ## Caveats
 
 - This isn't a 'solver'
-  - This function won't attempt to find a single solution. It will simply shuffle the array then check for consecutive identical elements. If you are looking for a 'solution' where shuffling an array in the 'right' way produces a 'correct' answer then this probably isn't for you.
+  - These functions won't attempt to find a single solution. They will simply shuffle the array then check for consecutive identical elements. If you are looking for a 'solution' where shuffling an array in the 'right' way produces a 'correct' answer then this probably isn't for you.
 - This isn't fast!
-  - Using Python the function is rapid when checking for 3+ consecutive elements in an array of ~100 elements. Larger arrays will take longer to check, especially larger arrays containing less variety (e.g. an array of 200 elements that are either '1' or '2')
-  - Checking for a limit of 1 or 2 identical consecutive elements in arrays with 20+ elements will take time. Running the function with an array of 50 elements and a consecutive limit of 1 took an average of 145ms (running the function 100 times).
+  - Using Python the functions are rapid when checking for 3+ consecutive elements in an array of ~100 elements. Larger arrays will take longer to check, especially larger arrays containing less variety (e.g. an array of 200 elements that are either '1' or '2')
+  - Checking for a limit of 1 or 2 identical consecutive elements in arrays with 20+ elements will take time. Running the functions with an array of 50 elements and a consecutive limit of 1 took an average of 145ms (running the function 100 times).
+- Recursion is used
+  - I feel your hate :) nevertheless they do appear in this code: you have been warned.
