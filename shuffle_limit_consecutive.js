@@ -48,3 +48,36 @@ function slc(array, cons) {
     }
     return false
 }
+
+export function shuffle_limit_consecutive_subset(arr, max_cons, offset, length)
+{
+    sufficiently_random = false
+    while (sufficiently_random == false) {
+        shuffleArray(arr)
+        sufficiently_random = slc_subset(arr, max_cons, offset, length)
+    }
+    return arr
+}
+
+function slc_subset(array, cons, offset, length) {
+    counter = 0
+    idx = cons
+    while (counter < cons) {
+        if (array.length <= cons) {
+            return true
+        }
+        if (offset < 0) {
+            value = array[idx-counter].substring(array[idx-counter].length + offset,(array[idx-counter].length + offset + length))
+            comparator = array[idx-counter-1].substring(array[idx-counter-1].length + offset,(array[idx-counter-1].length + offset + length))
+        } else {
+            value = array[idx-counter].substring(offset,(offset+length))
+            comparator = array[idx-counter-1].substring(offset,(offset+length))
+        }
+        if (value != comparator) {
+            return slc_subset(array.slice(idx-counter), cons, offset, length)
+        } else {
+            counter+=1
+        }
+    }
+    return false
+}

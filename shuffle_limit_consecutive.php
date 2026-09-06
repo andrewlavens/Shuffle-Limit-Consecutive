@@ -15,10 +15,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://gnu.org>.
 */
+
 /*
-    slc_check_sparse: check a sequence for too many consecutive values
+    shuffle_limit_consecutive: shuffle an array such that there aren't n consecutive identical values that are equal
+    array: the array to shuffle
+    max_cons: the maximum number of consecutive identical values permitted
+*/
+function shuffle_limit_consecutive(Array $array, Int $max_cons): Array
+{
+    # Error must be triggered when (max_cons + 1) consecutive identical values are detected
+    $sufficiently_random = False;
+    while ($sufficiently_random == False) {
+        shuffle($array);
+        $sufficiently_random = slc_check_sparse($array, $max_cons);
+    }
+    return $array;
+}
+
+/*
+    slc_check_sparse: check a sequence for too many consecutive identical values
     array: the array to test
-    cons: the maximum number of consecutive values 
+    cons: the maximum number of consecutive identical values 
 */
 function slc_check_sparse(Array $array, Int $max_cons) : bool
 {
@@ -38,20 +55,52 @@ function slc_check_sparse(Array $array, Int $max_cons) : bool
 }
 
 /*
-    shuffle_limit_consecutive: shuffle an array such that there aren't n consecutive values that are equal
+    shuffle_limit_consecutive_substring: shuffle an array such that there aren't n consecutive identical values that are equal
+    This function uses a substring of the values to check for CIVs
     array: the array to shuffle
-    max_cons: the maximum number of consecutive values permitted
+    max_cons: the maximum number of consecutive identical values permitted
+    offset: where in the value(s) to start the substring, false causes the whole value to be used and ignores length
+    length: how much of each value to substring, false causes the remainder of the value to be used
 */
-function shuffle_limit_consecutive(Array $array, Int $max_cons): Array
+function shuffle_limit_consecutive_substring($array, $max_cons, $offset = null, $length = null): Array
 {
-    # Error must be triggered when (max_cons + 1) consecutive values are detected
+    # Error must be triggered when (max_cons + 1) consecutive identical values are detected
     $sufficiently_random = False;
     while ($sufficiently_random == False) {
         shuffle($array);
-        $sufficiently_random = slc_check_sparse($array, $max_cons);
+        $sufficiently_random = slc_check_sparse_substring($array, $max_cons, $offset, $length);
     }
     return $array;
 }
+
+/*
+    slc_check_sparse_substring: check a sequence for too many consecutive identical values
+    This function uses a substring of the values to check for CIVs
+    array: the array to test
+    cons: the maximum number of consecutive identical values 
+    offset: where in the value(s) to start the substring, false causes the whole value to be used and ignores length
+    length: how much of each value to substring, false causes the remainder of the value to be used
+*/
+function slc_check_sparse_substring(array $array = [], int $max_cons = 1, ?int $offset = 0, ?int $length = null) : bool
+{
+    $counter = 0;
+    $idx = $max_cons;
+    while ($counter < $max_cons) {
+        if (count($array) <= $max_cons) {
+            return true;
+        }
+        $value = substr($array[$idx - $counter], $offset, $length);
+        $comparator = substr($array[$idx-$counter - 1], $offset, $length);
+        if ($value != $comparator) {
+            return slc_check_sparse_substring(array_slice($array, ($idx-$counter)), $max_cons, $offset, $length);
+        } else {
+            $counter+=1;
+        }
+    }
+    return false;
+}
+
+
 
 function check_length($array, $max_cons)
 {

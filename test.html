@@ -36,6 +36,56 @@
                 return false
             }
 
+            function shuffle_limit_consecutive_subset(arr, max_cons, offset, length)
+            {
+                sufficiently_random = false
+                while (sufficiently_random == false) {
+                    shuffleArray(arr)
+                    sufficiently_random = slc_subset(arr, max_cons, offset, length)
+                }
+                return arr
+            }
+
+            function slc_subset(array, cons, offset, length) {
+                counter = 0
+                idx = cons
+                while (counter < cons) {
+                    if (array.length <= cons) {
+                        return true
+                    }
+                    if (offset < 0) {
+                        value = array[idx-counter].substring(array[idx-counter].length + offset,(array[idx-counter].length + offset + length))
+                        comparator = array[idx-counter-1].substring(array[idx-counter-1].length + offset,(array[idx-counter-1].length + offset + length))
+                    } else {
+                        value = array[idx-counter].substring(offset,(offset+length))
+                        comparator = array[idx-counter-1].substring(offset,(offset+length))
+                    }
+                    if (value != comparator) {
+                        return slc_subset(array.slice(idx-counter), cons, offset, length)
+                    } else {
+                        counter+=1
+                    }
+                }
+                return false
+            }
+
+            files = ['mJMtBmVm_a.wav', 'w5F7vxv2_a.wav', 'J4xA83PM_a.wav', 'W5FirDqU_a.wav', '3JhrcsH0_a.wav', 'IOZSCvoe_a.wav', 'WswvP6RB_a.wav', 'HjPTYr7x_a.wav', 'nKGtrIpo_a.wav', 'khtkKVfE_a.wav', 'bik8vP4H_b.wav', 'ii5zUs1r_b.wav', '7SOc8tz3_b.wav', 'ILo6BFPT_b.wav', 'zV2xSQe7_b.wav', 'fMO8V2Gn_b.wav', 'LGnT6ULg_b.wav', '8dwmiDS3_b.wav', 'yKnPPeYd_b.wav', 'rZtlsWXJ_b.wav', 'byv29yuz_c.wav', '6YGDgHV4_c.wav', 'mBwE4DM2_c.wav', 'iat774oa_c.wav', '4bednRoi_c.wav', 'by0kPqQ7_c.wav', 'FF6k3oO4_c.wav', 'nQcrMH4s_c.wav', 'k1ClcgFb_c.wav', '2rwFBLDf_c.wav', 'jgrcD6rg_d.wav', 'O6QifgFE_d.wav', 'O714YOHF_d.wav', 'cE5lKCdJ_d.wav', 'UIDGKfSy_d.wav', '38fYDrLU_d.wav', '6h6ailDa_d.wav', 'kx2Ywxae_d.wav', 'a8gl9bcI_d.wav', 'l1kFI6HU_d.wav']
+            trials = 100
+            for (i=1; i<4; i++) {
+                let results = []
+                start = performance.now()
+                for (j=1; j<=trials; j++) {
+                    result = shuffle_limit_consecutive_subset(files,i,-5,1)
+                    results.push(result)
+                }
+                end = performance.now()
+                console.log(trials + ' iterations where no more than ' + i + ' consecutive identical values allowed: ' + (end - start) + 'ms')
+                console.log('One sample result: ', results[4].join(','))
+            }
+
+
+
+
             arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
             trials = 1000
 
