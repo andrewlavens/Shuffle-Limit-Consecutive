@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <script>
+
+            function slc(arr, max_cons, offset=null, span=1) {
+                passed = false;
+                while (!passed) {
+                    collection = [...arr];
+                    length = collection.length;
+                    result = [];
+                    current_cons = 1;
+                    for (idx = 0; idx < length; idx++) {
+                        abort = false;
+                        suitable_choice = false;
+                        while (!suitable_choice) {
+                            choice = collection[Math.floor(Math.random() * collection.length)]
+                            //console.log("Choice is ", choice);
+                            //console.log("Current CIVs is ", current_cons, " and max CIVs is ", max_cons);
+                            //console.log('Result is currently', result.toString())
+                            //console.log('Last value is ', result.slice(-1));
+                            if (current_cons == max_cons && result.length > 0 && choice == result.slice(-1).toString()) {
+                                //console.log('Need to choose again...');
+                                suitable_choice = false;
+                                if (offset) {
+                                    substrings = collection.map(substrings.bind(null, offset, span));
+                                    keys = [...new Set(substrings)];
+                                } else {
+                                    keys = [...new Set(collection)];
+                                }
+                                if (keys.length == 1 && keys[0] == result[result.length-1]) {
+                                    //console.log("Abort!");
+                                    abort = true;
+                                    break;
+                                }
+                            } else {
+                                suitable_choice = true
+                            }
+                        }
+                        if (abort) break;
+                        result.push(choice)
+                        collection.splice(collection.indexOf(choice), 1);
+                        if (result.length > 1) {
+                            if (offset) {
+                                lastValue = result.slice(-1).toString().slice(offset, offset+span);
+                                penultimateValue = result.slice(-2,-1).toString().slice(offset, offset+span);
+                            } else {
+                                lastValue = result.slice(-1).toString();
+                                penultimateValue = result.slice(-2,-1).toString();
+                            }
+                            //console.log('Current choice is ', lastValue, ' and previous choice is ', penultimateValue);
+                            if (lastValue == penultimateValue) {
+                                current_cons += 1
+                            } else {
+                                current_cons = 1
+                            }
+                        }
+                    }
+                    if (result.length === length) {
+                        passed = true
+                    }
+                }
+                return result        
+            }
+
+            function substring(entry, offset, length) {
+                return entry.slice(offset, offset+length);
+            }
+
+
+
+
+            arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+            trials = 1000
+
+            for (i=1; i<7; i++) {
+                let results = []
+                start = performance.now()
+                for (j=1; j<=trials; j++) {
+                    result = slc(arr,i)
+                    results.push(result)
+                }
+                end = performance.now()
+                console.log(trials + ' iterations where no more than ' + i + ' consecutive identical values allowed: ' + (end - start) + 'ms')
+                console.log('One sample result: ', results[0].join(','))
+            }
+/*
+            arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+            trials = 1
+            for (i=6; i<9; i++) {
+                let results = []
+                start = performance.now()
+                for (j=1; j<=trials; j++) {
+                    result = slc(arr,i)
+                    results.push(result)
+                }
+                end = performance.now()
+                console.log(trials + ' iterations where no more than ' + i + ' consecutive identical values allowed: ' + (end - start) + 'ms')
+                console.log('One sample result: ', results[4].join(','))
+            }
+*/
+        </script>
+    </head>
+</html>
