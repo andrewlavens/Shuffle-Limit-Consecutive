@@ -1,31 +1,55 @@
 import random
 
-def slc(arr, max_cons):
+def slc(arr, max_cons, offset = None, length = 1):
     passed = False
     while not passed:
         collection = arr.copy()
-        length = len(collection)
+        n_values = len(collection)
         result = []
         current_cons = 1
-        for idx in range(length):
+        for idx in range(n_values):
             suitable_choice = False
             while not suitable_choice:
                 choice = random.choice(collection)
-                if current_cons == max_cons and len(result) > 0 and choice == result[-1]:
-                    suitable_choice = False
-                    keys = list(dict.fromkeys(collection))
-                    if len(keys) == 1 and keys[0] == result[-1]:
-                        break
+                if len(result) > 0:
+                    if offset:
+                        current = choice[offset:offset+length]
+                        previous = result[-1][offset:offset+length]
+                    else:
+                        current = choice
+                        previous = result[-1]
+                    if current_cons == max_cons and current == previous:
+                        suitable_choice = False
+                        if offset:
+                            substrings = []
+                            for item in collection:
+                                substrings.append(item[offset:offset+length])
+                            keys = list(dict.fromkeys(substrings))
+                            if len(keys) == 1 and keys[0] == result[-1][offset:offset+length]:
+                                break
+                        else:
+                            keys = list(dict.fromkeys(collection))
+                            if len(keys) == 1 and keys[0] == result[-1]:
+                                break
+                    else:
+                        suitable_choice = True
                 else:
                     suitable_choice = True
             result.append(choice)
             collection.pop(collection.index(choice))
             if len(result) > 1:
-                if result[-1] == result[-2]:
+                '''if offset:
+                    current = result[-1][offset:offset+length]
+                    previous = result[-2][offset:offset+length]
+                else:
+                    current = result[-1]
+                    previous = result[-2]'''
+                #print(current, previous)
+                if current == previous:
                     current_cons += 1
                 else:
                     current_cons = 1
-        if len(result) == length:
+        if len(result) == n_values:
             passed = True
     return result        
 

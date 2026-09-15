@@ -14,12 +14,7 @@
                         suitable_choice = false;
                         while (!suitable_choice) {
                             choice = collection[Math.floor(Math.random() * collection.length)]
-                            //console.log("Choice is ", choice);
-                            //console.log("Current CIVs is ", current_cons, " and max CIVs is ", max_cons);
-                            //console.log('Result is currently', result.toString())
-                            //console.log('Last value is ', result.slice(-1));
                             if (current_cons == max_cons && result.length > 0 && choice == result.slice(-1).toString()) {
-                                //console.log('Need to choose again...');
                                 suitable_choice = false;
                                 if (offset) {
                                     substrings = collection.map(substrings.bind(null, offset, span));
@@ -28,7 +23,6 @@
                                     keys = [...new Set(collection)];
                                 }
                                 if (keys.length == 1 && keys[0] == result[result.length-1]) {
-                                    //console.log("Abort!");
                                     abort = true;
                                     break;
                                 }
@@ -47,7 +41,6 @@
                                 lastValue = result.slice(-1).toString();
                                 penultimateValue = result.slice(-2,-1).toString();
                             }
-                            //console.log('Current choice is ', lastValue, ' and previous choice is ', penultimateValue);
                             if (lastValue == penultimateValue) {
                                 current_cons += 1
                             } else {
