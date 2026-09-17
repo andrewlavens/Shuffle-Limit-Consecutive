@@ -52,7 +52,7 @@ function slc(Array $arr, Int $max_cons, Int|Null $offset = NULL, Int $length = 1
                 $current_cons = 1;
             }
         }
-        if (count($result) == $n_values) {
+        if (count($collection) == 0) {
             $passed = true;
         }
     }

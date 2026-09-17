@@ -49,7 +49,7 @@ def slc(arr, max_cons, offset = None, length = 1):
                     current_cons += 1
                 else:
                     current_cons = 1
-        if len(result) == n_values:
+        if len(collection) == 0:
             passed = True
     return result        
 
