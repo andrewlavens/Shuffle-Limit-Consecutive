@@ -100,7 +100,7 @@ The values shown in the table below are the average times for generating **one**
 |---|---|---|---|---|---|---|---|
 |PHP|3.5ms|2.4ms|2.2ms|9.3ms|3.6ms|2.6ms|AMD 2400GE / 16GB RAM / Command line|
 |Python|4.5ms|2.3ms|2.0ms|17.0ms|6.2ms|4.2ms|AMD 2400GE / 16GB RAM / Command line|
-|JavaScript|3.7ms|0.8ms|0.5ms|13.1ms|2.6ms|1.5ms|Pi 5, 8GB RAM, Firefox|
+|JavaScript|3.7ms|0.8ms|0.5ms|13.1ms|2.6ms|1.5ms|Pi 5 / 8GB RAM / Firefox|
 
 ## Caveats
 
