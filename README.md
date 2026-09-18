@@ -86,10 +86,20 @@ Calling the function with an argument of ```1``` should return an array where ev
 
 - ```result``` (array) the shuffled and verified array
 
+## Performance
+
+**Condition A** uses an array of 1000 values; 200 each of the numbers 1 to 5.
+
+**Condition B** uses an array of 1000 pseudo filenames created using ten random characters, followed by one of *_a*, *_b*, *_c* or *_d*, with the *.wav* suffix (e.g. *if8Cog8ama_d.wav*).
+
+The function is run three times for each condition, limiting the CIVs to 1, 2 and 3.
+
+|Language|A1|A2|A3|B1|B2|B3|
+|---|---|---|---|---|---|---|
+|PHP|3.5ms|2.4ms|2.2ms|9.3ms|3.6ms|2.6ms|
+|Python|3.1ms|1.8ms|1.6ms|12.7ms|4.6ms|3.0ms|
+|JavaScript|0.8ms|0.3ms|0.2ms|6.8ms|1.8ms|1.2ms|
+
 ## Caveats
 
-- The speed is 'good' but not very fast
-  - Using Python and various combinations of array lengths and CIV targets the function averages between 0.04 and 0.35 milliseconds.
-  - Using JavaScript and various combinations of array lengths and CIV targets the function averages between 0.01 and 0.05 milliseconds.
-  - Using PHP and various combinations of array lengths and CIV targets the function averages between 0.03 and 0.04 milliseconds.
-  - This should be quick enough for most needs but there will always be limits and edge cases.
+The speed is 'good' but not very fast. For arrays of up to 100 elements it is probably fine but the speed is impacted by large numbers of elements (as the testing above shows).
