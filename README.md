@@ -94,6 +94,8 @@ Calling the function with an argument of ```1``` should return an array where ev
 
 The function is run three times for each condition, limiting the CIVs to 1, 2 and 3. For the pseudo filenames, the character after the underscore was used as the value for testing CIVs.
 
+The values shown in the table below are the average times for generating **one** shuffled array complying with the CIV limit.
+
 |Language|A1|A2|A3|B1|B2|B3|
 |---|---|---|---|---|---|---|
 |PHP|3.5ms|2.4ms|2.2ms|9.3ms|3.6ms|2.6ms|
