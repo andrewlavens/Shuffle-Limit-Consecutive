@@ -26,15 +26,24 @@ function slc(arr, max_cons, offset=null, span=1) {
             suitable_choice = false;
             while (!suitable_choice) {
                 choice = collection[Math.floor(Math.random() * collection.length)]
-                if (current_cons == max_cons && result.length > 0 && choice == result.slice(-1).toString()) {
+                if (offset) {
+                    lastValue = choice.toString().slice(offset, offset+span);
+                    penultimateValue = result.slice(-1).toString().slice(offset, offset+span);
+                } else {
+                    lastValue = choice.toString();
+                    penultimateValue = result.slice(-1).toString();
+                }
+                if (current_cons == max_cons && result.length > 0 && lastValue == penultimateValue) {
                     suitable_choice = false;
                     if (offset) {
-                        substrings = collection.map(substrings.bind(null, offset, span));
+                        substrings = collection.map((item) => {
+                            return item.slice(offset, offset + span);
+                        });
                         keys = [...new Set(substrings)];
                     } else {
                         keys = [...new Set(collection)];
                     }
-                    if (keys.length == 1 && keys[0] == result[result.length-1]) {
+                    if (keys.length == 1 && keys[0] == penultimateValue) {
                         abort = true;
                         break;
                     }
@@ -46,13 +55,6 @@ function slc(arr, max_cons, offset=null, span=1) {
             result.push(choice)
             collection.splice(collection.indexOf(choice), 1);
             if (result.length > 1) {
-                if (offset) {
-                    lastValue = result.slice(-1).toString().slice(offset, offset+span);
-                    penultimateValue = result.slice(-2,-1).toString().slice(offset, offset+span);
-                } else {
-                    lastValue = result.slice(-1).toString();
-                    penultimateValue = result.slice(-2,-1).toString();
-                }
                 if (lastValue == penultimateValue) {
                     current_cons += 1
                 } else {
@@ -66,8 +68,3 @@ function slc(arr, max_cons, offset=null, span=1) {
     }
     return result        
 }
-
-function substring(entry, offset, length) {
-    return entry.slice(offset, offset+length);
-}
-
