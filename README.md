@@ -92,7 +92,7 @@ Calling the function with an argument of ```1``` should return an array where ev
 
 **Condition B** uses an array of 1000 pseudo filenames created using ten random characters, followed by one of *_a*, *_b*, *_c* or *_d*, with the *.wav* suffix (e.g. *if8Cog8ama_d.wav*).
 
-The function is run three times for each condition, limiting the CIVs to 1, 2 and 3.
+The function is run three times for each condition, limiting the CIVs to 1, 2 and 3. For the pseudo filenames, the character after the underscore was used as the value for testing CIVs.
 
 |Language|A1|A2|A3|B1|B2|B3|
 |---|---|---|---|---|---|---|
