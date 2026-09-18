@@ -96,11 +96,11 @@ The function is run three times for each condition, limiting the CIVs to 1, 2 an
 
 The values shown in the table below are the average times for generating **one** shuffled array complying with the CIV limit.
 
-|Language|A1|A2|A3|B1|B2|B3|
-|---|---|---|---|---|---|---|
-|PHP|3.5ms|2.4ms|2.2ms|9.3ms|3.6ms|2.6ms|
-|Python|3.1ms|1.8ms|1.6ms|12.7ms|4.6ms|3.0ms|
-|JavaScript|0.8ms|0.3ms|0.2ms|6.8ms|1.8ms|1.2ms|
+|Language|A1|A2|A3|B1|B2|B3|Hardware|
+|---|---|---|---|---|---|---|---|
+|PHP|3.5ms|2.4ms|2.2ms|9.3ms|3.6ms|2.6ms|AMD 2400GE / 16GB RAM / Command line|
+|Python|4.5ms|2.3ms|2.0ms|17.0ms|6.2ms|4.2ms|AMD 2400GE / 16GB RAM / Command line|
+|JavaScript|3.7ms|0.8ms|0.5ms|13.1ms|2.6ms|1.5ms|Pi 5, 8GB RAM, Firefox|
 
 ## Caveats
 
