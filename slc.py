@@ -54,13 +54,6 @@ def slc(arr, max_cons, offset = None, length = 1):
             result.append(choice)
             collection.pop(collection.index(choice))
             if len(result) > 1:
-                '''if offset:
-                    current = result[-1][offset:offset+length]
-                    previous = result[-2][offset:offset+length]
-                else:
-                    current = result[-1]
-                    previous = result[-2]'''
-                #print(current, previous)
                 if current == previous:
                     current_cons += 1
                 else:
