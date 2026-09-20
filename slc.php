@@ -22,6 +22,12 @@ function slc(Array $arr, Int $max_cons, Int|Null $offset = NULL, Int $length = 1
     $passed = false;
     while (!$passed) {
         $collection = $arr;
+        $substrings = [];
+        if ($offset) {
+            foreach($collection as $item) {
+                $substrings[] = substr($item, $offset, $length);
+            }
+        }
         $n_values = count($collection);
         $result = [];
         $current_cons = 1;
@@ -41,10 +47,6 @@ function slc(Array $arr, Int $max_cons, Int|Null $offset = NULL, Int $length = 1
                     if ($current_cons == $max_cons && count($result) > 0 && $current == $previous) {
                         $suitable_choice = false;
                         if ($offset) {
-                            $substrings = [];
-                            foreach($collection as $item) {
-                                $substrings[] = substr($item, $offset, $length);
-                            }
                             $keys = array_unique($substrings);
                             if (count($keys) == 1 && $keys[0] == substr($result[count($result)-1], $offset, $length)) {
                                 break;
@@ -64,6 +66,7 @@ function slc(Array $arr, Int $max_cons, Int|Null $offset = NULL, Int $length = 1
             }
             $result[] = $choice;
             array_splice($collection, $choice_idx, 1);
+            if (count($substrings) > 0) array_splice($substrings, $choice_idx, 1);
             if (count($result) > 1 && $current == $previous) {
                 $current_cons++;
             } else {
@@ -77,9 +80,3 @@ function slc(Array $arr, Int $max_cons, Int|Null $offset = NULL, Int $length = 1
     return $result;
 }
 
-$arr = [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4];
-print_r(implode(',', slc($arr, 1))."\n\n");
-print_r(implode(',', slc($arr, 2))."\n\n");
-print_r(implode(',', slc($arr, 3))."\n\n");
-print_r(implode(',', slc($arr, 4))."\n\n");
-print_r(implode(',', slc($arr, 5))."\n\n");

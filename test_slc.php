@@ -5,12 +5,11 @@ require ('items_to_shuffle.php');
 
 // Timing many runs to retrieve an average
 $trials = 1000;
-foreach(range(1, 6) as $cons) {
+foreach(range(1, 3) as $cons) {
     $results = [];
     $start = microtime(true);
     foreach (range(1, $trials) as $i) {
         $results[] = slc($digits, $cons);
-        echo ".";
     }
     echo "\n";
     $end = microtime(true);
@@ -19,12 +18,11 @@ foreach(range(1, 6) as $cons) {
 }
 
 $trials = 1000;
-foreach(range(1, 4) as $cons) {
+foreach(range(1, 3) as $cons) {
     $results = [];
     $start = microtime(true);
     foreach (range(1, $trials) as $i) {
         $results[] = slc($files, $cons, -5, 1);
-        echo ".";
     }
     echo "\n";
     $end = microtime(true);

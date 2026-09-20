@@ -20,6 +20,10 @@ def slc(arr, max_cons, offset = None, length = 1):
     passed = False
     while not passed:
         collection = arr.copy()
+        substrings = []
+        if offset:
+            for item in collection:
+                substrings.append(item[offset:offset+length])
         n_values = len(collection)
         result = []
         current_cons = 1
@@ -37,9 +41,6 @@ def slc(arr, max_cons, offset = None, length = 1):
                     if current_cons == max_cons and current == previous:
                         suitable_choice = False
                         if offset:
-                            substrings = []
-                            for item in collection:
-                                substrings.append(item[offset:offset+length])
                             keys = list(dict.fromkeys(substrings))
                             if len(keys) == 1 and keys[0] == result[-1][offset:offset+length]:
                                 break
@@ -53,6 +54,8 @@ def slc(arr, max_cons, offset = None, length = 1):
                     suitable_choice = True
             result.append(choice)
             collection.pop(collection.index(choice))
+            if len(substrings) > 0:
+                substrings.pop(substrings.index(choice[offset:offset+length]))
             if len(result) > 1:
                 if current == previous:
                     current_cons += 1

@@ -18,6 +18,13 @@ function slc(arr, max_cons, offset=null, span=1) {
     passed = false;
     while (!passed) {
         collection = [...arr];
+        if (offset) {
+            substrings = collection.map((item) => {
+                return item.slice(offset, offset + span);
+            });
+        } else {
+            substrings = [];
+        }
         length = collection.length;
         result = [];
         current_cons = 1;
@@ -27,23 +34,20 @@ function slc(arr, max_cons, offset=null, span=1) {
             while (!suitable_choice) {
                 choice = collection[Math.floor(Math.random() * collection.length)]
                 if (offset) {
-                    lastValue = choice.toString().slice(offset, offset+span);
-                    penultimateValue = result.slice(-1).toString().slice(offset, offset+span);
+                    currentValue = choice.toString().slice(offset, offset+span);
+                    previousValue = result.slice(-1).toString().slice(offset, offset+span);
                 } else {
-                    lastValue = choice.toString();
-                    penultimateValue = result.slice(-1).toString();
+                    currentValue = choice.toString();
+                    previousValue = result.slice(-1).toString();
                 }
-                if (current_cons == max_cons && result.length > 0 && lastValue == penultimateValue) {
+                if (current_cons == max_cons && result.length > 0 && currentValue == previousValue) {
                     suitable_choice = false;
                     if (offset) {
-                        substrings = collection.map((item) => {
-                            return item.slice(offset, offset + span);
-                        });
                         keys = [...new Set(substrings)];
                     } else {
                         keys = [...new Set(collection)];
                     }
-                    if (keys.length == 1 && keys[0] == penultimateValue) {
+                    if (keys.length == 1 && keys[0] == previousValue) {
                         abort = true;
                         break;
                     }
@@ -54,8 +58,11 @@ function slc(arr, max_cons, offset=null, span=1) {
             if (abort) break;
             result.push(choice)
             collection.splice(collection.indexOf(choice), 1);
+            if (offset) {
+                substrings.splice(substrings.indexOf(currentValue), 1);
+            }
             if (result.length > 1) {
-                if (lastValue == penultimateValue) {
+                if (currentValue == previousValue) {
                     current_cons += 1
                 } else {
                     current_cons = 1
